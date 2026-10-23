@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: estoque
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: portfolio
+    ports:
+      - "5434:5432"
+    volumes:
+      - estoque_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d estoque"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  estoque_postgres:
